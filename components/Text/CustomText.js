@@ -26,8 +26,7 @@ export default function CustomText(props) {
 }
 
 const styles = StyleSheet.create({
-  text: fontType => {
-    return {
+  text: fontType => ({
     fontFamily: `Poppins-${fontType}`
-  }}
+  })
 })
