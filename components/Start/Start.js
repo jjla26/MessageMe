@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 
 // Importing components from react native
 import { StyleSheet, TextInput, View, TouchableOpacity, ImageBackground, Image, TouchableWithoutFeedback } from 'react-native'
-
-
+import { SvgXml } from 'react-native-svg'
 import CustomText from '../Text/CustomText'
+import PersonSvg from '../personsvg/PersonSvg'
 
 // This component renders the starting screen
 export default function Start() {
   const [ selectedColor, setSelectedColor ] = useState('')
-  
   const selectColor = color => {
     setSelectedColor(color)
   }
@@ -22,7 +21,10 @@ export default function Start() {
       <View style={styles.optionsContainer}>
         <View style={styles.options}>
           <View style={styles.inputContainer}>
-            <TextInput placeholder='Type your name' style={[styles.input, styles.optionTitle]}></TextInput>
+            <View style={styles.inputBox}>
+              <PersonSvg />
+              <TextInput placeholder='Type your name' style={[styles.input, styles.optionTitle]}></TextInput>
+            </View>
           </View>
           <View style={styles.colorsContainer}>
             <CustomText style={styles.optionTitle}>Choose Background Color:</CustomText> 
@@ -80,12 +82,20 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     color: '#757083',
   },
-  input: {
-    opacity: 0.5,
-    borderColor: '#757083',
-    borderWidth: 2,
+  inputBox:{
     height: 60,
-    paddingHorizontal: 20
+    width: '100%',
+    flexDirection: 'row',
+    borderWidth: 2,
+    paddingHorizontal: 20,
+    opacity: 0.5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  input: {
+    flex:1,
+    fontFamily: 'Poppins',
+    marginLeft: 10,
   },
   button:{
     fontSize: 16,
@@ -122,7 +132,9 @@ const styles = StyleSheet.create({
     backgroundColor: color,
   }),
   inputContainer: {
-    flex: 1
+    flex: 1,
+    flexDirection: 'row',
+    borderColor: '#757083',
   },
   buttonContainer: {
     flex: 1,
