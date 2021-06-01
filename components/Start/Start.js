@@ -15,7 +15,7 @@ export default function Start() {
   return (
     <ImageBackground source={require('../../img/BackgroundImage.png')} style={styles.backgroundImage} >
       <View style={styles.titleContainer}>
-        <CustomText style={styles.title}>MessageMe</CustomText>
+        <CustomText style={styles.title} type="600">MessageMe</CustomText>
       </View>
       <View style={styles.optionsContainer}>
         <View style={styles.options}>
@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
   title: {
     color: '#FFF',
     fontSize: 45,
-    fontWeight: '600',
   },
 
   // Center content of the options container
@@ -102,7 +101,7 @@ const styles = StyleSheet.create({
   // Customize input font
   input: {
     flex:1,
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Regular',
     marginLeft: 10,
   },
 
@@ -114,7 +113,6 @@ const styles = StyleSheet.create({
   // Colors options title
   optionTitle: {
     fontSize: 16,
-    fontWeight: '300',
     color: '#757083',
   },
   // Color options

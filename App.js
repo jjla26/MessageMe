@@ -6,7 +6,11 @@ import Start from './components/Start/Start'
 
 export default function App() {
   let [fontsLoaded] = useFonts({
-    'Poppins': require('./assets/fonts/Poppins-Regular.ttf')
+    'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-ExtraBold': require('./assets/fonts/Poppins-ExtraBold.ttf'),
+    'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
+    'Poppins-Italic': require('./assets/fonts/Poppins-Italic.ttf'),
+    'Poppins-Light': require('./assets/fonts/Poppins-Light.ttf')
   });
 
   if (!fontsLoaded) {
