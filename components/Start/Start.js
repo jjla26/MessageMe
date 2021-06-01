@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 // Importing components from react native
-import { StyleSheet, TextInput, KeyboardAvoidingView, View, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, ScrollView } from 'react-native'
+import { StyleSheet, TextInput, KeyboardAvoidingView, View, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, ScrollView, Alert } from 'react-native'
 import CustomText from '../Text/CustomText'
 import PersonSvg from '../personsvg/PersonSvg'
 
@@ -9,8 +9,20 @@ import PersonSvg from '../personsvg/PersonSvg'
 export default function Start(props) {
   const [ selectedColor, setSelectedColor ] = useState('#8A95A5')
   const [ name, setName ] = useState('')
+  
   const selectColor = color => {
     setSelectedColor(color)
+  }
+
+  const handleStart = () => {
+    if(name){
+      props.navigation.navigate('Chat', {
+        name: name,
+        color: selectedColor
+      })
+    }else{
+      Alert.alert('Notification', 'Your name is required', [{ text: 'OK' }] )
+    }
   }
 
   return (
@@ -42,10 +54,7 @@ export default function Start(props) {
             </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity 
-                onPress={() => props.navigation.navigate('Chat', {
-                  name: name,
-                  color: selectedColor
-                })} 
+                onPress={handleStart} 
                 style={[styles.button]} >
                 
                 <CustomText style={{ ...styles.title, ...styles.buttonText }}>Start Chatting</CustomText>
