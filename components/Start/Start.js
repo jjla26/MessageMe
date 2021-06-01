@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 
 // Importing components from react native
-import { StyleSheet, TextInput, View, TouchableOpacity, Text, ImageBackground, Image, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, TextInput, View, TouchableOpacity, ImageBackground, Image, TouchableWithoutFeedback } from 'react-native'
+
+
+import CustomText from '../Text/CustomText'
 
 // This component renders the starting screen
 export default function Start() {
@@ -14,7 +17,7 @@ export default function Start() {
   return (
     <ImageBackground source={require('../../img/BackgroundImage.png')} style={styles.backgroundImage} >
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>MessageMe</Text>
+        <CustomText style={styles.title}>MessageMe</CustomText>
       </View>
       <View style={styles.optionsContainer}>
         <View style={styles.options}>
@@ -22,7 +25,7 @@ export default function Start() {
             <TextInput placeholder='Type your name' style={[styles.input, styles.optionTitle]}></TextInput>
           </View>
           <View style={styles.colorsContainer}>
-            <Text style={styles.optionTitle}>Choose Background Color:</Text> 
+            <CustomText style={styles.optionTitle}>Choose Background Color:</CustomText> 
             <View style={styles.colorOptionsContainer}>
               {colors.map((color) =>
                 <TouchableWithoutFeedback key={color} onPress={() => selectColor(color)} >
@@ -35,7 +38,7 @@ export default function Start() {
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={[styles.button]}>
-              <Text style={[styles.title, styles.buttonText]}>Start Chatting</Text>
+              <CustomText style={{ ...styles.title, ...styles.buttonText }}>Start Chatting</CustomText>
             </TouchableOpacity>
           </View>
         </View>
@@ -81,7 +84,8 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     borderColor: '#757083',
     borderWidth: 2,
-    height: 60
+    height: 60,
+    paddingHorizontal: 20
   },
   button:{
     fontSize: 16,
