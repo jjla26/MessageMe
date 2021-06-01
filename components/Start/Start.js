@@ -27,7 +27,7 @@ export default function Start(props) {
 
   return (
     <ImageBackground source={require('../../img/BackgroundImage.png')} style={styles.backgroundImage} >
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.backgroundImage} >
+      <KeyboardAvoidingView keyboardVerticalOffset={50} behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.backgroundImage} >
         <View style={styles.titleContainer}>
           <CustomText style={styles.title} type="600">MessageMe</CustomText>
         </View>
@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
   // Added full width and height tot he background container
   backgroundImage: {
     flex: 1,
-  },
+    resizeMode: 'stretch',
+},
   // center content of the title container
   titleContainer: {
     flex: 1,
@@ -99,7 +100,8 @@ const styles = StyleSheet.create({
     width: '88%', // 88% of the total 
     height: '88%', // 88% of the 50% which means 44%
     padding: '6%',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    minHeight: 300
   },
   inputContainer: {
     flex: 1,
