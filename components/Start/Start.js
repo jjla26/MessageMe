@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 // Importing components from react native
 import { StyleSheet, TextInput, View, TouchableOpacity, ImageBackground, Image, TouchableWithoutFeedback } from 'react-native'
-import { SvgXml } from 'react-native-svg'
 import CustomText from '../Text/CustomText'
 import PersonSvg from '../personsvg/PersonSvg'
 
@@ -32,7 +31,7 @@ export default function Start() {
               {colors.map((color) =>
                 <TouchableWithoutFeedback key={color} onPress={() => selectColor(color)} >
                   <View style={styles.colorBorder(selectedColor === color)}>
-                    <View style={[styles.color, styles.colorOption(color)]}></View>
+                    <View style={[styles.color(color), styles.colorOption]}></View>
                   </View>
                 </TouchableWithoutFeedback>
               )}
@@ -52,19 +51,30 @@ export default function Start() {
 const colors = ['#090C08','#474056','#8A95A5','#B9C6AE']
 // Component styles
 const styles = StyleSheet.create({
+  // Added full width and height tot he background container
   backgroundImage: {
     flex: 1,
   },
+  // center content of the title container
   titleContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
+  // Customize title font
+  title: {
+    color: '#FFF',
+    fontSize: 45,
+    fontWeight: '600',
+  },
+
+  // Center content of the options container
   optionsContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
+  // Create the white square for the options
   options: {
     backgroundColor: '#FFF',
     width: '88%', // 88% of the total 
@@ -72,16 +82,12 @@ const styles = StyleSheet.create({
     padding: '6%',
     justifyContent: 'space-between'
   },
-  title: {
-    color: '#FFF',
-    fontSize: 45,
-    fontWeight: '600',
+  inputContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    borderColor: '#757083',
   },
-  optionTitle: {
-    fontSize: 16,
-    fontWeight: '300',
-    color: '#757083',
-  },
+  // Create inputBox to wrap the input and the icon
   inputBox:{
     height: 60,
     width: '100%',
@@ -92,11 +98,56 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+
+  // Customize input font
   input: {
     flex:1,
     fontFamily: 'Poppins',
     marginLeft: 10,
   },
+
+  // center content of the color section
+  colorsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  // Colors options title
+  optionTitle: {
+    fontSize: 16,
+    fontWeight: '300',
+    color: '#757083',
+  },
+  // Color options
+  colorOptionsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start', 
+    marginVertical: 10
+  },
+  // outer circle selection
+  colorBorder: border => ({
+    borderWidth: 2, 
+    borderRadius: 23, 
+    width: 46, 
+    height: 46, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    margin: 4, 
+    borderColor: border ? '#757083' : 'transparent',
+  }),
+
+  // Inner circle styles
+  colorOption: {
+    margin: 10,
+    borderRadius: 17,
+    width: 34,
+    height: 34
+  },
+  color: color => ({
+    backgroundColor: color,
+  }),
+
+  // button styles
   button:{
     fontSize: 16,
     backgroundColor: '#757083',
@@ -107,41 +158,8 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16
   },
-  colorOptionsContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start', 
-  },
-  colorBorder: border => ({
-    borderWidth: 2, 
-    borderRadius: 30, 
-    width: 60, 
-    height: 60, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    margin: 3, 
-    borderColor: border ? '#757083' : 'transparent',
-  }),
-  color: {
-    margin: 10,
-    borderRadius: 23,
-    width: 46,
-    height: 46
-  },
-  colorOption: color => ({
-    backgroundColor: color,
-  }),
-  inputContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    borderColor: '#757083',
-  },
   buttonContainer: {
     flex: 1,
     justifyContent: 'flex-end'
-  },
-  colorsContainer: {
-    flex: 1,
-    justifyContent: 'center'
   },
 });
