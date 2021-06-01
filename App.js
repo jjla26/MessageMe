@@ -1,8 +1,16 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import AppLoading from 'expo-app-loading';
+// import react Navigation
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+// import usefont and apploading to load fonts
 import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading';
+
 import Start from './components/Start/Start'
+import Chat from './components/Chat/Chat'
+
+const Stack = createStackNavigator();
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -18,9 +26,25 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Start />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Start">
+        <Stack.Screen 
+          name="Home"
+          component={Start}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Chat"
+          component={Chat}
+          options={({ route }) => ({ 
+            title: route.params.name, 
+            cardStyle: {
+              backgroundColor: route.params.color
+            }
+          })}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
