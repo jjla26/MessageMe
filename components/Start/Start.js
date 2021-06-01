@@ -1,49 +1,60 @@
 import React, { useState } from 'react'
 
 // Importing components from react native
-import { StyleSheet, TextInput, View, TouchableOpacity, ImageBackground, Image, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, TextInput, KeyboardAvoidingView, View, TouchableOpacity, ImageBackground, TouchableWithoutFeedback, ScrollView } from 'react-native'
 import CustomText from '../Text/CustomText'
 import PersonSvg from '../personsvg/PersonSvg'
 
 // This component renders the starting screen
-export default function Start() {
-  const [ selectedColor, setSelectedColor ] = useState('')
+export default function Start(props) {
+  const [ selectedColor, setSelectedColor ] = useState('#8A95A5')
+  const [ name, setName ] = useState('')
   const selectColor = color => {
     setSelectedColor(color)
   }
 
   return (
     <ImageBackground source={require('../../img/BackgroundImage.png')} style={styles.backgroundImage} >
-      <View style={styles.titleContainer}>
-        <CustomText style={styles.title} type="600">MessageMe</CustomText>
-      </View>
-      <View style={styles.optionsContainer}>
-        <View style={styles.options}>
-          <View style={styles.inputContainer}>
-            <View style={styles.inputBox}>
-              <PersonSvg />
-              <TextInput placeholder='Type your name' style={[styles.input, styles.optionTitle]}></TextInput>
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.backgroundImage} >
+        <View style={styles.titleContainer}>
+          <CustomText style={styles.title} type="600">MessageMe</CustomText>
+        </View>
+        <View style={styles.optionsContainer}>
+          <View style={styles.options}>
+            <ScrollView contentContainerStyle={{flex:1}}>
+            <View style={styles.inputContainer}>
+              <View style={styles.inputBox}>
+                <PersonSvg />
+                <TextInput onChangeText={text => setName(text)} placeholder='Type your name' style={[styles.input, styles.optionTitle]}></TextInput>
+              </View>
             </View>
-          </View>
-          <View style={styles.colorsContainer}>
-            <CustomText style={styles.optionTitle}>Choose Background Color:</CustomText> 
-            <View style={styles.colorOptionsContainer}>
-              {colors.map((color) =>
-                <TouchableWithoutFeedback key={color} onPress={() => selectColor(color)} >
-                  <View style={styles.colorBorder(selectedColor === color)}>
-                    <View style={[styles.color(color), styles.colorOption]}></View>
-                  </View>
-                </TouchableWithoutFeedback>
-              )}
+            <View style={styles.colorsContainer}>
+              <CustomText style={styles.optionTitle}>Choose Background Color:</CustomText> 
+              <View style={styles.colorOptionsContainer}>
+                {colors.map((color) =>
+                  <TouchableWithoutFeedback key={color} onPress={() => selectColor(color)} >
+                    <View style={styles.colorBorder(selectedColor === color)}>
+                      <View style={[styles.color(color), styles.colorOption]}></View>
+                    </View>
+                  </TouchableWithoutFeedback>
+                )}
+              </View>
             </View>
-          </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.button]}>
-              <CustomText style={{ ...styles.title, ...styles.buttonText }}>Start Chatting</CustomText>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity 
+                onPress={() => props.navigation.navigate('Chat', {
+                  name: name,
+                  color: selectedColor
+                })} 
+                style={[styles.button]} >
+                
+                <CustomText style={{ ...styles.title, ...styles.buttonText }}>Start Chatting</CustomText>
+              </TouchableOpacity>
+            </View>
+            </ScrollView>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   )
 }
@@ -71,7 +82,7 @@ const styles = StyleSheet.create({
   optionsContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   // Create the white square for the options
   options: {
