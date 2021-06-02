@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { SvgProps, Defs, Path, G, Use } from "react-native-svg"
-/* SVGR has dropped some elements not supported by react-native-svg: title */
 
+// Component renders SVG icon of an user
 function PersonSvg(props: SvgProps) {
   return (
     <Svg

@@ -10,10 +10,12 @@ export default function Start(props) {
   const [ selectedColor, setSelectedColor ] = useState('#8A95A5')
   const [ name, setName ] = useState('')
   
+  // Function to select the color
   const selectColor = color => {
     setSelectedColor(color)
   }
 
+  // Function checks for a name and sent the user to the chat view
   const handleStart = () => {
     if(name){
       props.navigation.navigate('Chat', {
@@ -27,6 +29,7 @@ export default function Start(props) {
 
   return (
     <ImageBackground source={require('../../img/BackgroundImage.png')} style={styles.backgroundImage} >
+      {/* KeyboardAvoidingView is used to prevent the keyboard to hide the input */}
       <KeyboardAvoidingView keyboardVerticalOffset={20} behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.backgroundImage} >
         <View style={styles.titleContainer}>
           <CustomText style={styles.title} type="600">MessageMe</CustomText>

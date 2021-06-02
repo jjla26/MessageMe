@@ -6,13 +6,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 // import usefont and apploading to load fonts
 import { useFonts } from 'expo-font'
 import AppLoading from 'expo-app-loading';
-
+// import views
 import Start from './components/Start/Start'
 import Chat from './components/Chat/Chat'
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  //Loading fonts
   let [fontsLoaded] = useFonts({
     'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
     'Poppins-ExtraBold': require('./assets/fonts/Poppins-ExtraBold.ttf'),
@@ -20,7 +21,7 @@ export default function App() {
     'Poppins-Italic': require('./assets/fonts/Poppins-Italic.ttf'),
     'Poppins-Light': require('./assets/fonts/Poppins-Light.ttf')
   });
-
+  // Showing app logo until the fonts are loaded
   if (!fontsLoaded) {
     return <AppLoading />;
   }
