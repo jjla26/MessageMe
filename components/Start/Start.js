@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     resizeMode: 'stretch',
-},
+  },
   // center content of the title container
   titleContainer: {
     flex: 1,
