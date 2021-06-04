@@ -9,6 +9,7 @@ export default function Chat(props) {
   const [ messages, setMessages ] = useState([])
   const name = props.route.params.name
 
+  // Function that updates list of messages
   const onCollectionUpdate = querySnapshot => {
     const allMessages = []
     querySnapshot.forEach( doc => {
@@ -25,14 +26,13 @@ export default function Chat(props) {
     setMessages(allMessages)
   }
 
-  // Used useeffect to load some mock messages
+  // Authentication and fetch of messages from firebase
   useEffect(() => {
     let unsubscribeMessages
     const unsubscribeAuth = auth.onAuthStateChanged(async user => {
       if(!user){
         await auth.signInAnonymously();
       }
-      //update user state with currently active user data
       setUser(user.uid)
       unsubscribeMessages = db.collection('messages').onSnapshot(onCollectionUpdate)
     })
