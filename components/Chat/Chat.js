@@ -1,32 +1,45 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
+import { db, auth } from '../../firebase'
 
 // Component renders the chat view
 export default function Chat(props) {
+  const [ user, setUser ] = useState(null)
   const [ messages, setMessages ] = useState([])
   const name = props.route.params.name
 
+  const onCollectionUpdate = querySnapshot => {
+    const allMessages = []
+    querySnapshot.forEach( doc => {
+      const data = doc.data()
+      allMessages.push({
+        _id: doc.id,
+        text: data.text,
+        user: {
+          name: data.user,
+        },
+        createdAt: data.createdAt.toDate()
+      })
+    })
+    setMessages(allMessages)
+  }
+
   // Used useeffect to load some mock messages
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: `${name} has joined to the chat`,
-        createdAt: new Date(),
-        system: true,
-      },
-      {
-        _id: 2,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ])
+    let unsubscribeMessages
+    const unsubscribeAuth = auth.onAuthStateChanged(async user => {
+      if(!user){
+        await auth.signInAnonymously();
+      }
+      //update user state with currently active user data
+      setUser(user.uid)
+      unsubscribeMessages = db.collection('messages').onSnapshot(onCollectionUpdate)
+    })
+    return () => {
+      unsubscribeMessages()
+      unsubscribeAuth()
+    }
   }, [])
 
   // Function to send a new message
