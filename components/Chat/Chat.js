@@ -50,7 +50,7 @@ export default function Chat(props) {
   return (
     <View style={styles.container}>
       <GiftedChat
-        renderBubble={renderBubble} // Attribute to customize the chat bubble
+        // renderBubble={renderBubble} // Attribute to customize the chat bubble
         messages={messages}
         onSend={messages => onSend(messages)}
         user={{
@@ -60,19 +60,6 @@ export default function Chat(props) {
       {/* Fixed Keyboard hiding the input for android devices */}
       { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
     </View>
-  )
-}
-
-function renderBubble(props) {
-  return (
-    <Bubble
-      {...props}
-      wrapperStyle={{
-        right: {
-          backgroundColor: '#000'
-        }
-      }}
-    />
   )
 }
 
