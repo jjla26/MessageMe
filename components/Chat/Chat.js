@@ -18,7 +18,8 @@ export default function Chat(props) {
         _id: doc.id,
         text: data.text,
         user: {
-          name: data.user,
+          _id: data.user._id,
+          name: data.user.name,
         },
         createdAt: data.createdAt.toDate()
       })
@@ -28,13 +29,17 @@ export default function Chat(props) {
 
   // Authentication and fetch of messages from firebase
   useEffect(() => {
-    let unsubscribeMessages
+    let unsubscribeMessages = () => {}
     const unsubscribeAuth = auth.onAuthStateChanged(async user => {
       if(!user){
-        await auth.signInAnonymously();
+        try {
+          await auth.signInAnonymously();
+        } catch (error) {
+          console.log(error)
+        }
       }
       setUser(user.uid)
-      unsubscribeMessages = db.collection('messages').onSnapshot(onCollectionUpdate)
+      unsubscribeMessages = db.collection('messages').orderBy('createdAt', 'desc').onSnapshot(onCollectionUpdate)
     })
     return () => {
       unsubscribeMessages()
@@ -43,8 +48,16 @@ export default function Chat(props) {
   }, [])
 
   // Function to send a new message
-  const onSend = messages => {
-    setMessages(previousState => GiftedChat.append(previousState, messages))
+  const onSend = message => {
+    db.collection('messages').add({
+      _id: message[0]._id,
+      createdAt: message[0].createdAt,
+      text: message[0].text,
+      user: {
+        _id: user,
+        name: name
+      }
+    })
   }
 
   return (
@@ -54,7 +67,7 @@ export default function Chat(props) {
         messages={messages}
         onSend={messages => onSend(messages)}
         user={{
-          _id: 1,
+          _id: user,
         }}
       />
       {/* Fixed Keyboard hiding the input for android devices */}
