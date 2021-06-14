@@ -3,6 +3,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { View, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { GiftedChat, InputToolbar } from 'react-native-gifted-chat'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from 'expo-image-picker';
 
 import CustomActions from '../CustomActions/CustomActions'
 import { db, auth } from '../../firebase'
@@ -27,6 +28,7 @@ export default function Chat(props) {
           _id: data.user._id,
           name: data.user.name,
         },
+        image: data.image ? data.image : null,
         createdAt: data.createdAt.toDate()
       })
     })
@@ -113,7 +115,8 @@ export default function Chat(props) {
       user: {
         _id: user,
         name: name
-      }
+      },
+      image: message[0].image ? message[0].image : null
     }
     db.collection('messages').add(msg)
   }
@@ -121,7 +124,7 @@ export default function Chat(props) {
   return (
     <View style={styles.container}>
       <GiftedChat
-        renderActions={renderCustomActions} // Attribute to customize the chat bubble
+        renderActions={renderCustomActions}
         renderInputToolbar={online ? renderInputToolbar : () => {}}
         messages={messages}
         onSend={messages => onSend(messages)}
