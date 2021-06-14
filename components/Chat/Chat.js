@@ -4,6 +4,7 @@ import { View, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { GiftedChat, InputToolbar } from 'react-native-gifted-chat'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import CustomActions from '../CustomActions/CustomActions'
 import { db, auth } from '../../firebase'
 
 // Component renders the chat view
@@ -48,7 +49,6 @@ export default function Chat(props) {
 
   // Function to save the messages in asyncstorage
   const saveMessages = async () => {
-    console.log(messages)
     try {
       await AsyncStorage.setItem('messages', JSON.stringify(messages));
     } catch (error) {
@@ -75,7 +75,6 @@ export default function Chat(props) {
         setOnline(true)
         unsubscribeAuth = auth.onAuthStateChanged(async user => {
           const messages = await AsyncStorage.getItem('messages') || [];
-          console.log(messages)
           if(!user){
             try {
               await auth.signInAnonymously();
@@ -122,7 +121,7 @@ export default function Chat(props) {
   return (
     <View style={styles.container}>
       <GiftedChat
-        // renderBubble={renderBubble} // Attribute to customize the chat bubble
+        renderActions={renderCustomActions} // Attribute to customize the chat bubble
         renderInputToolbar={online ? renderInputToolbar : () => {}}
         messages={messages}
         onSend={messages => onSend(messages)}
@@ -134,6 +133,10 @@ export default function Chat(props) {
       { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
     </View>
   )
+}
+
+export const renderCustomActions = props => {
+  return <CustomActions {...props} />
 }
 
 const renderInputToolbar = props => {
