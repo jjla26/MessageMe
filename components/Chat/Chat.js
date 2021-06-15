@@ -3,7 +3,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { View, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { GiftedChat, InputToolbar } from 'react-native-gifted-chat'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as ImagePicker from 'expo-image-picker';
+import MapView from 'react-native-maps';
 
 import CustomActions from '../CustomActions/CustomActions'
 import { db, auth } from '../../firebase'
@@ -28,8 +28,9 @@ export default function Chat(props) {
           _id: data.user._id,
           name: data.user.name,
         },
-        image: data.image ? data.image : null,
-        createdAt: data.createdAt.toDate()
+        image: data.image,
+        createdAt: data.createdAt.toDate(),
+        location: data.location
       })
     })
     setMessages(allMessages)
@@ -108,15 +109,17 @@ export default function Chat(props) {
 
   // Function to send a new message
   const onSend = message => {
+    console.log(message)
     const msg = {
       _id: message[0]._id,
       createdAt: message[0].createdAt,
-      text: message[0].text,
+      text: message[0].text ? message[0].text : null,
       user: {
         _id: user,
         name: name
       },
-      image: message[0].image ? message[0].image : null
+      image: message[0].image ? message[0].image : null,
+      location: message[0].location ? message[0].location.coords : null
     }
     db.collection('messages').add(msg)
   }
@@ -124,6 +127,7 @@ export default function Chat(props) {
   return (
     <View style={styles.container}>
       <GiftedChat
+        renderCustomView={renderCustomView}
         renderActions={renderCustomActions}
         renderInputToolbar={online ? renderInputToolbar : () => {}}
         messages={messages}
@@ -138,7 +142,29 @@ export default function Chat(props) {
   )
 }
 
-export const renderCustomActions = props => {
+const renderCustomView = props => {
+  const { currentMessage} = props;
+  console.log(currentMessage)
+  if (currentMessage.location) {
+    return (
+      <MapView
+        style={{width: 150,
+          height: 100,
+          borderRadius: 13,
+          margin: 3}}
+        region={{
+          latitude: currentMessage.location.latitude,
+          longitude: currentMessage.location.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      />
+    );
+  }
+  return null;
+}
+
+const renderCustomActions = props => {
   return <CustomActions {...props} />
 }
 
