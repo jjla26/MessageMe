@@ -2,7 +2,7 @@
 
 ![](messageme-showcase.gif)
 
-##### MessageMe is a chat app for mobile devices made with React Native. The app provides users with a chat interface and options to share images and their location
+###### MessageMe is a chat app for mobile devices made with React Native. The app provides users with a chat interface and options to share images and their location.
 
 ### Features
 
@@ -41,4 +41,5 @@ reader so that I can engage with a chat interface.
 
 ###### Clone this repository using: git clone https://github.com/jjla26/MessageMe.git After cloning the repository run: `npm install` to install all the dependencies and is ready to be used running: `expo start` or `npm start`.
 
-##### Next, you’ll need the Expo app for your phone to run your project on. Search for the Expo app in the relevant app store for your device (iOS or Android). Another option is to use a simulator/emulator for iphone or android. You can find the instructions [here](https://reactnative.dev/docs/next/environment-setup).
+
+###### Next, you’ll need the Expo app for your phone to run your project on. Search for the Expo app in the relevant app store for your device (iOS or Android). Another option is to use a simulator/emulator for iphone or android. You can find the instructions [here](https://reactnative.dev/docs/next/environment-setup).
