@@ -8,6 +8,7 @@ import { storage } from '../../firebase'
 
 export default function CustomActions(props) {
 
+  //Function that access to the library and send a picture from there
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
     if(status === 'granted'){
@@ -27,6 +28,7 @@ export default function CustomActions(props) {
     }
   }
 
+  //Function that access to the camera and send a picture
   const takePhoto = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync() && await ImagePicker.requestCameraPermissionsAsync()
     if(status === 'granted'){
@@ -44,6 +46,7 @@ export default function CustomActions(props) {
     }
   }
 
+  //function that sends location 
   const sendLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync()
     if(status === 'granted'){
@@ -58,6 +61,7 @@ export default function CustomActions(props) {
     }
   }
 
+  // Function that uploads an image to firestorage
   const uploadImage = async (uri) => {
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();

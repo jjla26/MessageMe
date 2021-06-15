@@ -142,6 +142,7 @@ export default function Chat(props) {
   )
 }
 
+// Function that renders the mapview
 const renderCustomView = props => {
   const { currentMessage} = props;
   console.log(currentMessage)
@@ -164,10 +165,12 @@ const renderCustomView = props => {
   return null;
 }
 
+//Function that renders the actions 
 const renderCustomActions = props => {
   return <CustomActions {...props} />
 }
 
+//Function that renders the inputtoolbar
 const renderInputToolbar = props => {
   return <InputToolbar {...props} />
 }
