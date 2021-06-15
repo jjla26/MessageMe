@@ -1,5 +1,7 @@
 ## MessageMe
 
+![](messageme-showcase.gif)
+
 ##### MessageMe is a chat app for mobile devices made with React Native. The app provides users with a chat interface and options to share images and their location
 
 ### Features
